@@ -1,0 +1,73 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html lang="en">
+<head>
+
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie App</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <!-- Logo and Home Search -->
+        <div class="right-navbar">
+            <p>LOGO here</p>
+            <p>Home</p>
+            <p>Movies</p>
+            <p>About us</p>
+            <!-- Search container with input and button together -->
+ <div class="search-container">
+    <form method="GET" action="{% url 'home' %}">
+        <input type="text" placeholder="Search by title..." name="search" id="search" class="search-bar" value="{{ query }}">
+        <button type="submit" class="search-btn">Search</button>
+    </form>
+</div>
+
+        </div>
+        <!-- Menu Items -->
+        <ul class="nav-list">
+            <li><a href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
+            <li><a href="#"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+            <li><a href="#"><i class="fas fa-shopping-cart"></i> Cart</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- New Releases Section -->
+{% if movies %}
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Trending Now</h1>
+        <p>Watch the latest blockbusters and trending series.</p>
+        <a href="#new-releases" class="cta-btn">Explore Movies</a>
+    </div>
+</section>
+
+        <section class="new-releases">
+        <div class="section-title">
+            <h2>NEW RELEASES</h2>
+        </div>
+        <div class="movies-grid">
+            {% for movie in movies %}
+            <div class="movie-card">
+                <img src="{{ movie.movie_poster.url }}" alt="{{ movie.title }}">
+                <h3>{{ movie.title }}</h3>
+                <p class="price">${{ movie.price }}</p>
+                <button class="add-to-cart">ADD TO CART</button>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+{% else %}
+    <div class="no-results">
+        <h2>No movies found. Try searching for another title.</h2>
+    </div>
+{% endif %}
+</body>
+</html>
+
